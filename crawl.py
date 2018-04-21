@@ -22,6 +22,7 @@ class seleniumTest():
     def setUp(self):
         print('start')
 
+    #取对应歌曲id的歌词
     def test_get_lyric(self, id=450853439):
         lrc_url = 'http://music.163.com/api/song/lyric?' + 'id=' + str(id) + '&lv=1&kv=1&tv=-1'
         lyric = requests.get(lrc_url)
@@ -32,6 +33,8 @@ class seleniumTest():
         lrc = re.sub(pat, "", lrc)
         lrc = lrc.strip()
         return lrc
+
+    #取对应歌手id的Top热歌id列表
     def test_get_singer_songs_list(self, singerId = 6731):
         singer_url = 'http://music.163.com/artist?id=' + str(singerId)
         web_data = requests.get(singer_url)
@@ -45,6 +48,8 @@ class seleniumTest():
             song_id = each.attrs["href"]
             music_id_set.append(song_id[9:])
         return music_id_set
+
+    #取对应歌单id的歌曲id列表
     def test_get_playlist_songs_list(self, playlistId = 498708023):
         top_singer_url = 'http://music.163.com/playlist?id=' + str(playlistId)
         web_data = requests.get(top_singer_url, headers=headers)
@@ -61,8 +66,8 @@ class seleniumTest():
     def tearDown(self):
         print('down')
 
+
 if __name__ == "__main__":
-    #unittest.main()
     reload(sys)
     sys.setdefaultencoding('utf-8')
     test = seleniumTest()
